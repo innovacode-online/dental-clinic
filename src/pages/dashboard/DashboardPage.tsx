@@ -1,7 +1,9 @@
 import { FC } from 'react';
 
+import { Typography } from '@mui/material';
+
 export const DashboardPage: FC = () => {
     return (
-        <div>DashboardPage</div>
+        <Typography>Dashboard Page</Typography>
     )
 }
