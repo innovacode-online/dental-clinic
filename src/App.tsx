@@ -5,7 +5,7 @@ import { Navigation } from "./router/Navigation";
 const App = () => {
     return (
         <BrowserRouter>
-            <Navigation/>       
+            <Navigation/>
         </BrowserRouter>
     )
 }
