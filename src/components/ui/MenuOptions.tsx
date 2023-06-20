@@ -2,17 +2,25 @@ import { FC } from 'react';
 import { IMenu } from '../../interfaces';
 
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import { useNavigate } from 'react-router-dom';
 
 interface Props{
     options: IMenu[];
 }
 
 export const MenuOptions: FC<Props> = ({ options }) => {
+
+    const navigate = useNavigate();
+
+    const handleNavigation = (url: string) => {
+        navigate( url );
+    }
+
     return (
         <List>
             {
                 options.map( item => (
-                    <ListItem key={ item.path }>
+                    <ListItem key={ item.path } onClick={() => handleNavigation( item.path )}>
                         <ListItemButton
                             sx={{
                                 mb:'.5rem',
