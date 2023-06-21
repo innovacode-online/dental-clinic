@@ -1,7 +1,14 @@
-import React from 'react'
+import { FC } from 'react'
 
-export const ClientsPage = () => {
+import { Box, Typography } from '@mui/material'
+import { UsersTable } from '../../components'
+
+export const ClientsPage: FC = () => {
     return (
-        <div>ClientsPage</div>
+        <Box component='main'>
+            <Typography variant='h1' mb={ 5 }>Gestiona tus clientes</Typography>
+
+            <UsersTable/>
+        </Box>
     )
 }
