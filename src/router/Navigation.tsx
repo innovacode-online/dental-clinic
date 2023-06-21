@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
 import { MainLayout } from '../layouts/MainLayout'
-import { ClientsPage, DashboardPage, EmployeesPage, LoginPage, QuotesPage, RegisterPage } from '../pages'
+import { ClientsPage, DashboardPage, EmployeesPage, LoginPage, QuotePage, QuotesPage, RegisterPage } from '../pages'
 
 
 export const Navigation: FC = () => {
@@ -19,6 +19,10 @@ export const Navigation: FC = () => {
                 <Route path='clients' element={ <ClientsPage/> }/>
                 <Route path='employees' element={ <EmployeesPage/> }/>
                 <Route path='quotes' element={ <QuotesPage/> }/>
+                <Route 
+                    path='quotes/:id'
+                    element={ <QuotePage/> }
+                />
 
             </Route>
         </Routes>

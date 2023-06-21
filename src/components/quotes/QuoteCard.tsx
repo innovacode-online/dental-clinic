@@ -1,8 +1,12 @@
 import { FC } from 'react'
 
 import { Avatar, Box, Button, Card, Grid, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 export const QuoteCard: FC = () => {
+
+    const navigate = useNavigate();
+
     return (
         <Grid item xs={ 12 } md={ 6 } lg={ 4 }>
             <Card
@@ -19,6 +23,7 @@ export const QuoteCard: FC = () => {
                 <Typography variant='subtitle1' mb='1rem'>Nombre de la consulta</Typography>
                 <Button
                     variant='outlined'
+                    onClick={() => navigate(`/quotes/${ 1 }`)}
                 >
                     Ver consulta
                 </Button>
