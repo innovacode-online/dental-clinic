@@ -19,7 +19,7 @@ export const MainLayout: FC = () => {
             <SideMenu/>
 
             {/* MAIN */}
-            <Box component='main' width='100%'>
+            <Box component='main' width='100%' sx={{ overflowY:'scroll' }}>
                 <Outlet/>
             </Box>
         </Box>
