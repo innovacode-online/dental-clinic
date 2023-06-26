@@ -1,10 +1,19 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react';
 
 import { Box, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import { MdModeEditOutline, MdOutlineDeleteOutline } from 'react-icons/md'
+import { Patient } from '../../interfaces'
+import { UserContext } from '../../context';
 
 
-export const UsersTable: FC = () => {
+interface Props{
+    users: Patient[]
+}
+
+export const UsersTable: FC<Props> = ({ users }) => {
+
+    const { deletePatient } = useContext(UserContext)
+
     return (
         <>
             <TableContainer
@@ -17,16 +26,18 @@ export const UsersTable: FC = () => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Nombre completo</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Telefono</TableCell>
+                            <TableCell>CI</TableCell>
+                            <TableCell>Nombre</TableCell>
+                            <TableCell>Apellidos</TableCell>
+                            <TableCell>Fecha de creación</TableCell>
                             <TableCell>Acciones</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {
-                            [1,2,3,4,4,5,6,6,7,3,8].map((user, index) => (
+                            users.map((user, index) => (
                                 <TableRow
+                                    key={ index }
                                     sx={{
                                         'td, th': {
                                             border: 0,
@@ -34,9 +45,10 @@ export const UsersTable: FC = () => {
                                         }
                                     }}
                                 >
-                                    <TableCell>Mattias Alexandre Duarte Aparicio</TableCell>
-                                    <TableCell>maduarte@innovacode.online</TableCell>
-                                    <TableCell>+591 66622444</TableCell>
+                                    <TableCell>{ user.ci }</TableCell>
+                                    <TableCell>{ user.nombre }</TableCell>
+                                    <TableCell>{ user.apellidos }</TableCell>
+                                    <TableCell>{ user.created_at }</TableCell>
                                     <TableCell>
                                         <Box 
                                             sx={{ 
@@ -52,6 +64,7 @@ export const UsersTable: FC = () => {
                                             </IconButton>
 
                                             <IconButton 
+                                                onClick={() => deletePatient(user.id)}
                                                 sx={{ fontSize:'1.25rem', color:'error.main' }}
                                             >
                                                 <MdOutlineDeleteOutline/>
