@@ -1,18 +1,16 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 
 import { Box, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import { MdModeEditOutline, MdOutlineDeleteOutline } from 'react-icons/md'
-import { Patient } from '../../interfaces'
-import { UserContext } from '../../context';
+import { Employee, Patient } from '../../interfaces'
 
 
 interface Props{
-    users: Patient[]
+    users: Patient[] | Employee[];
+    onDelete: (id: number) => void;
 }
 
-export const UsersTable: FC<Props> = ({ users }) => {
-
-    const { deletePatient } = useContext(UserContext)
+export const UsersTable: FC<Props> = ({ users, onDelete }) => {
 
     return (
         <>
@@ -64,7 +62,7 @@ export const UsersTable: FC<Props> = ({ users }) => {
                                             </IconButton>
 
                                             <IconButton 
-                                                onClick={() => deletePatient(user.id)}
+                                                onClick={() => onDelete( user.id )}
                                                 sx={{ fontSize:'1.25rem', color:'error.main' }}
                                             >
                                                 <MdOutlineDeleteOutline/>

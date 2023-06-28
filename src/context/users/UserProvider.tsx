@@ -3,7 +3,7 @@ import { UserContext } from '.';
 
 
 import { supabase } from '../../supabase';
-import { Patient } from '../../interfaces/patient';
+import { Patient, Employee } from '../../interfaces';
 
 interface PropsProvider{
     children : JSX.Element | JSX.Element[]
@@ -11,7 +11,7 @@ interface PropsProvider{
 
 export const UserProvider:FC<PropsProvider> = ({ children }) => {
     const [patients, setPatients] = useState([] as Patient[])
-    // const [employees, setEmployees] = useState([])
+    const [employees, setEmployees] = useState([] as Employee[])
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -23,8 +23,12 @@ export const UserProvider:FC<PropsProvider> = ({ children }) => {
             const { data: pacientes } = await supabase
                 .from('pacientes')
                 .select('*')
-
             setPatients( pacientes as Patient[] );
+
+            const { data: employees } = await supabase.from('usuarios').select().eq('rol','2');
+            setEmployees( employees as Employee[] )
+            
+            
             setIsLoading( false );
 
         } catch (error) {
@@ -43,6 +47,11 @@ export const UserProvider:FC<PropsProvider> = ({ children }) => {
         }
     }
 
+    const createNewEmpleado = async ( newEmployee:{ ci: number; nombre: string; apellidos: string; descripcion: string; password: string; rol: number}): Promise<void> => {
+        const { error } = await supabase.from('usuarios').insert([ newEmployee ]);
+        console.log(error);
+    }
+
     const deletePatient = async ( id:number): Promise<void> => {
         try {
             const { error } = await supabase.from('pacientes').delete().eq('id', id);
@@ -54,7 +63,20 @@ export const UserProvider:FC<PropsProvider> = ({ children }) => {
         } catch (error) {
             console.log(error);
         }
+    }
 
+
+    const deleteEmployee = async ( id:number): Promise<void> => {
+        try {
+            const { error } = await supabase.from('usuarios').delete().eq('id', id);
+            if( !error ){
+                getAllUsers();
+                return;
+            }
+            console.log(error);
+        } catch (error) {
+            console.log(error);
+        }  
     }
 
 
@@ -67,9 +89,12 @@ export const UserProvider:FC<PropsProvider> = ({ children }) => {
         <UserContext.Provider value={{
             isLoading,
             patients,
+            employees,
             
             createNewPatient,
-            deletePatient
+            deletePatient,
+            deleteEmployee,
+            createNewEmpleado
         }}>
             { children }
         </UserContext.Provider>
